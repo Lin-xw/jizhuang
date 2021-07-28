@@ -1,36 +1,18 @@
 <template>
-  <div>
+  <div id="app">
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-* {
-  margin: 0; padding: 0;
-  box-sizing: border-box;
-}
-body{
-  line-height: 1.5;
-}
-a{
-  text-decoration: none;
-  color: inherit;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+<style lang="scss">//不能加scoped，不加就是影响整个页面
+@import "~@/assets/style/reset.scss";
+@import "~@/assets/style/helper.scss";
+body {
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2C3E50;
+  -moz-osx-font-smoothing: grayscale;//关联苹果系统
+  color: #333;
+  line-height: 1.5;
+  font-family: $font-hei;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2C3E50;
-    &.router-link-exact-active {
-      color: #42B983;
-    }
-  }
-}
+
 </style>
