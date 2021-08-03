@@ -6,3 +6,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
+ul,ol{
+  list-style: none;//解决列表样式问题
+}
+button, input{
+  font: inherit;//所有按键，输入框的样式字体都是继承的
+}
+:focus{
+  outline: none;
+}

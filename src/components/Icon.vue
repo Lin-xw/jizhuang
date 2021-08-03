@@ -17,6 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .icon {
+  border: 1px solid red;
   width: 1em; height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
