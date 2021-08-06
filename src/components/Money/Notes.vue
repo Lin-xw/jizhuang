@@ -6,9 +6,13 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: "Notes"
-};
+  import Vue from 'vue';
+  import Component from 'vue-class-component';
+
+  @Component
+  export default class Notes extends Vue{
+
+  }
 </script>
 
 <style lang="scss" scoped>

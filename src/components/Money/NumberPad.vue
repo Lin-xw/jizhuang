@@ -1,29 +1,66 @@
 <template>
   <div class="numberPad">
-    <div class="output">100</div>
+    <div class="output">{{ output }}</div>
     <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button class="ok">OK</button>
-      <button class="zero">0</button>
-      <button>.</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button @click="remove">删除</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="clear">清空</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
+      <button @click="ok" class="ok">OK</button>
+      <button @click="inputContent" class="zero">0</button>
+      <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: "NumberPad"
-};
+import Vue from 'vue';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class NumberPad extends Vue {
+  output  = '0';//输入为字符串
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  inputContent(event: MouseEvent) {//输入内容
+    const button = (event.target as HTMLButtonElement);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const input = button.textContent!;//！把 空 排除
+    if(this.output.length === 16){ return; }//如果 目前输出数字的长度已经等于16就停
+    if(this.output === '0') {//默认为0
+      if ('0123456789'.indexOf(input) >= 0) {//如果输入0123456789就替换之前
+        this.output = input;
+      }else {
+        this.output += input;
+      }
+      return;
+    }
+    if (this.output.indexOf('.') >= 0 && input === '.') {return;}//如果有一个‘.’就不能再打‘.
+    this.output += input;
+  }
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  remove(){
+    if (this.output.length === 1 ){
+      this.output = '0';//如果输入框长度为1，那么输入框就显示0
+    } else {//删掉当前的输入，减一位
+      this.output = this.output.slice(0, -1);
+    }
+  }
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  clear(){//如果点击clear清空，那么输入就为0
+    this.output = '0';
+  }
+
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -36,6 +73,7 @@ export default {
     font-family: Consolas, monospace; //等宽字体
     padding: 9px 16px;
     text-align: right;
+    height: 72px;
   }
   .buttons {
     @extend %clearFix;
