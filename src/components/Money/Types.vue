@@ -11,7 +11,7 @@
 
 <script lang="ts">//TS组件
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 
 @Component
@@ -23,6 +23,11 @@ export default class Types extends Vue {
       throw new Error('type is unknown');
     }
     this.type = type;
+  }
+
+  @Watch('type')//适合于在某个东西变化的时候用
+  onTypeChanged(value: string) {
+    this.$emit('update:value', value);
   }
 }
 
