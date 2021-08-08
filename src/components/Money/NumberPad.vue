@@ -27,6 +27,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
+  @Prop() readonly value!: number;
   output  = '0';//输入为字符串
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -62,7 +63,9 @@ export default class NumberPad extends Vue {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   ok(){//点ok的时候在触发事件
     this.$emit('update:value', this.output);
-  }
+    this.$emit('submit', this.output);
+    this.output ='0';
+  }//当ok被点击的时候再触发一个事件
 
 }
 </script>
