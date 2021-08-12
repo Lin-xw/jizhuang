@@ -4,9 +4,9 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag"
+      <li v-for="tag in dataSource" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
-          @click="toggle(tag)">{{ tag }}
+          @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
   </div>
@@ -16,31 +16,28 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-
 @Component
 export default class Tags extends Vue {
   @Prop() readonly dataSource: string[] | undefined;
-  selectedTags: string[] = [];//空数组
-
+  selectedTags: string[] = [];
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  toggle(tag: string) {//开关
+  toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
-    if (index >= 0) {//取消选中
+    if (index >= 0) {
       this.selectedTags.splice(index, 1);
     } else {
       this.selectedTags.push(tag);
     }
-    this.$emit('update:value', this.selectedTags)
+    this.$emit('update:value', this.selectedTags);
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   create() {
     const name = window.prompt('请输入标签名');
     if (name === '') {
       window.alert('标签名不能为空');
-    } else {
-      if (this.dataSource) {
-        this.$emit('update:dataSource', [...this.dataSource, name]);
-      }
+    } else if (this.dataSource) {
+      this.$emit('update:dataSource',
+          [...this.dataSource, name]);
     }
   }
 }
@@ -48,46 +45,40 @@ export default class Tags extends Vue {
 
 <style lang="scss" scoped>
 .tags {
+  background: white;
   font-size: 14px;
   padding: 16px;
   flex-grow: 1;
   display: flex;
   flex-direction: column-reverse;
-
   > .current {
     display: flex;
-    flex-wrap: wrap; //换行
-
+    flex-wrap: wrap;
     > li {
       $bg: #d9d9d9;
       background: $bg;
-      $h: 24px; //使用声明变量的方法
-      height: $h; //只有一行的情况下才能用height=line-height来居中
+      $h: 24px;
+      height: $h;
       line-height: $h;
       border-radius: $h/2;
       padding: 0 16px;
-      margin-right: 12px; //右边距
+      margin-right: 12px;
       margin-top: 4px;
-
-      &.selected { //选中后变化
+      &.selected {
         background: darken($bg, 50%);
         color: white;
       }
     }
   }
-
   > .new {
     padding-top: 16px;
-
     button {
-      background: transparent; //去掉背景
-      border: none; //去掉边框
+      background: transparent;
+      border: none;
       color: #999;
-      border-bottom: 1px solid; //添加下划线
-      padding: 0 4px; //延长下划线长度
+      border-bottom: 1px solid;
+      padding: 0 4px;
     }
   }
 }
-
-;
 </style>

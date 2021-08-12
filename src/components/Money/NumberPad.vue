@@ -28,7 +28,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class NumberPad extends Vue {
   @Prop() readonly value!: number;
-  output  = '0';//输入为字符串
+  output  = this.value.toString();//输入为字符串
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   inputContent(event: MouseEvent) {//输入内容
